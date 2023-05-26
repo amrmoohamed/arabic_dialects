@@ -12,29 +12,29 @@ PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('home.html')
 
 @app.route('/classify', methods=['POST'])
-def classify():
-    sentence = request.form['sentence']
-    model_type = request.form['model']
-
-    if model_type == 'ml':
-        model = load_model("./Models/SVC.pkl")
-        predicted_label, predicted_probabilities,output_list = classify_sentence(model, sentence)
-        result = predicted_label
-        return render_template('index.html', result=result)
-
-    elif model_type == 'dl':
-        max_seq_length = 61
-        model = load_model("./Models/LSTM", 'DL')
-        encoder = load_encoder('./Models/encoder.joblib')        
-        tokenized = tokenize_and_pad_tweet(sentence, max_seq_length, './Data/tokenizer_model.pkl')
-        predicted_label, predicted_probabilities, output_list = classify_sentence(model, sentence, 'DL', max_seq_length, 'onehot', encoder)
-        result = predicted_label
-        return render_template('index.html', result=result)
-
-    
+def predict():
+    if request.method == 'POST':
+        review = request.form["Review"]
+        selcted = request.form["model"]
+        if selcted=="ML":
+            model = load_model("./Models/SVC.pkl")
+            predicted_label, predicted_probabilities,output_list = classify_sentence(model, review)
+            result = predicted_label
+            print(result[0],"hello from app")
+            return render_template('result.html',prediction = result[0])
+        else:
+            max_seq_length = 61
+            model = load_model("./Models/LSTM", 'DL')
+            encoder = load_encoder('./Models/encoder.joblib')        
+            tokenized = tokenize_and_pad_tweet(review, max_seq_length, './Models/tokenizer_model.pkl')
+            predicted_label, predicted_probabilities, output_list = classify_sentence(model, review, 'DL', max_seq_length, 'onehot', encoder)
+            result = predicted_label
+            print(result,"hello from app")
+            return render_template('result.html',prediction = result)
+  
 
 if __name__ == '__main__':
     app.run()

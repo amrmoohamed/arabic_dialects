@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>NLP App Ramen Borah</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+	<style>
+		/* CSS styles */
+	
+		body {
+			background-color: #f5f8fa;
+			font-family: Arial, sans-serif;
+		}
+	
+		.container {
+			max-width: 600px;
+			margin: 0 auto;
+			padding: 20px;
+		}
+	
+		header {
+			background-color: #00b9ff;
+			color: white;
+			padding: 20px;
+		}
+	
+		#brandname {
+			font-size: 24px;
+			font-weight: bold;
+		}
+	
+		h2 {
+			margin-top: 10px;
+			font-size: 20px;
+		}
+	
+		.results {
+			margin-top: 30px;
+		}
+	
+		.results h2 {
+			margin-bottom: 20px;
+			font-size: 24px;
+			color: inherit; /* Set the initial color to inherit from parent */
+		}
+	
+		.results h2.positive {
+			color: inherit; /* Set the initial color to inherit from parent */
+		}
+	
+		.flag-img {
+			margin-top: 10px;
+			max-width: 100%;
+		}
+	
+		.flag-accent {
+			margin-top: 10px;
+			width: 50px;
+			height: 10px;
+		}
+	
+		/* Additional CSS for flag colors */
+		.flag-accent.eg { background-color: #e30000; }
+		.flag-accent.ly { background-color: #000080; }
+		.flag-accent.lb { background-color: #d21034; }
+		.flag-accent.sd { background-color: #000000; }
+		.flag-accent.ma { background-color: #ce1126; }
+	</style>
+	
+</head>
+<body>
+
+	<header>
+		<div class="container">
+			<div id="brandname">
+				Arabic Dialect Identification
+			</div>
+			<h2>Lets check the Result</h2>
+		</div>
+	</header>
+
+	<div class="container">
+		<p style="color: black; font-size: 20px; text-align: left;"><b>Sentiment of your Accent</b></p>
+		<div class="results">
+			{% if prediction == 'EG'  or prediction == 0 %}
+			<h2 class="positive" style="color: #e30000;">Egyption accent</h2>
+			<img src="https://upload.wikimedia.org/wikipedia/commons/f/fe/Flag_of_Egypt.svg" alt="Egypt Flag" class="flag-img">
+		
+		{% elif prediction == "LY" or prediction == 2  %}
+			<h2 class="positive" style="color: #006A4E;">Libyan accent</h2>
+			<img src="https://upload.wikimedia.org/wikipedia/commons/0/05/Flag_of_Libya.svg" alt="Libya Flag" class="flag-img">
+			
+		
+		{% elif prediction == "LB" or prediction == 1 %}
+			<h2 class="positive" style="color: #d21034;">Lebanon accent</h2>
+			<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Flag_of_Lebanon.svg" alt="Lebanon Flag" class="flag-img">
+		
+		{% elif prediction == "SD" or prediction == 4 %}
+			<h2 class="positive" style="color: #000000;">Sudanese accent</h2>
+			<img src="https://cdn.britannica.com/96/4496-004-278A6211/Flag-Sudan.jpg" class="flag-img">
+		
+		{% elif prediction == "MA" or prediction == 3 %}
+			<h2 class="positive" style="color: #ce1126;">Moroccan accent</h2>
+			<img src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Flag_of_Morocco_%28large_stroke%29.svg" alt="Morocco Flag" class="flag-img">
+		
+		{% endif %}
+		</div>
+	</div>
+
+</body>
+</html>

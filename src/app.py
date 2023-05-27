@@ -8,8 +8,8 @@ import tarfile
 
 
 # Specify the path to the tar.xz file
-tar_file_path = './Models/SVC.pkl.tar.xz'
-extract_path = './Models'
+tar_file_path = './src/Models/SVC.pkl.tar.xz'
+extract_path = './src/Models'
     
     # Open the tar file
 with tarfile.open(tar_file_path) as tar:

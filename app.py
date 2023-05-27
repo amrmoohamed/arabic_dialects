@@ -23,16 +23,14 @@ def predict():
             model = load_model("./Models/SVC.pkl")
             predicted_label, predicted_probabilities,output_list = classify_sentence(model, review)
             result = predicted_label
-            print(result[0],"hello from app")
             return render_template('result.html',prediction = result[0])
         else:
-            max_seq_length = 61
+            max_seq_length = 72
             model = load_model("./Models/LSTM", 'DL')
             encoder = load_encoder('./Models/encoder.joblib')        
             tokenized = tokenize_and_pad_tweet(review, max_seq_length, './Models/tokenizer_model.pkl')
             predicted_label, predicted_probabilities, output_list = classify_sentence(model, review, 'DL', max_seq_length, 'onehot', encoder)
             result = predicted_label
-            print(result,"hello from app")
             return render_template('result.html',prediction = result)
   
 

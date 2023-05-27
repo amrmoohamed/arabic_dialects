@@ -1,0 +1,12 @@
+emoji==2.4.0
+Flask==2.2.3
+joblib==1.2.0
+keras==2.12.0
+nltk==3.8.1
+numpy==1.21.5
+pandas==1.5.3
+PyArabic==0.6.15
+scikit_learn==1.2.2
+tensorflow==2.12.0
+tkseem==0.0.3
+tqdm==4.65.0

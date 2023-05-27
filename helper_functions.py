@@ -16,6 +16,7 @@ from sklearn.pipeline import Pipeline
 import os
 import pandas as pd 
 import joblib
+from data_cleaning import *
 
 def split(df,target_column,labels_column):
     X = df[target_column].astype('U').values.tolist()
@@ -134,6 +135,7 @@ def classify_sentence(model, sentence, model_type=None,max_seq_length=None,encod
 
     """
     if model_type == 'DL' and max_seq_length != None:
+            sentence=clean_tweet(sentence,"dl")
             tokenized_tweet = tokenize_and_pad_tweet(sentence,max_seq_length)
             probabilities_array = model.predict(tokenized_tweet)
             predicted_probabilities = probabilities_array.tolist()[0]
@@ -157,6 +159,7 @@ def classify_sentence(model, sentence, model_type=None,max_seq_length=None,encod
                         
     else:
         # Make a prediction.
+        sentence=clean_tweet(sentence)
         predicted_label = model.predict([sentence])
         print(f"predicted Dialect is {predicted_label[0]} \n")
 
@@ -224,7 +227,7 @@ def tokenize_and_pad_tweets(data,datatype= 'train',max_words=None,max_seq_len=No
             print("please check if tokenizer model is passed correctly!")
     
     return sequences, vocab_size, max_seq_len, tokenizer
-
+# for prediction
 def tokenize_and_pad_tweet(tweet,max_seq_len=None,model_path= './Models/tokenizer_model.pkl',max_words=None):
     PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
     model_path = os.path.join(PROJECT_PATH, model_path)

@@ -90,41 +90,59 @@ def form_sentence(words):
     sentence = ' '.join(words)
     return sentence
 
-def clean_tweet(tweet):
+def clean_tweet(tweet,mode="ml"):
     """
     A function to clean a single tweet.
     """
-    #tokenize tweet 
-    words = tokenize_tweet(tweet)
-    #remove extra white-spaces
-    words = remove_extra_spaces(words)
-    #remove urls 
-    words = remove_urls(words)
-    #remove user mentions 
-    words = remove_user_mentions(words)
-    #remove punctiation
-    words = remove_punctuation(words)
-    #remove numbers
-    words = remove_numbers(words)
-    #remove emojis
-    words = remove_emojis(words)
-    #remove non-arabic charachters
-    words = remove_foreign_language(words)
-    #remove tashkeel 
-    words = remove_tashkeel(words)
-    #remove repeated charachters
-    words = remove_repeated_chars(words)
-    #remove stop words 
-    words = remove_stop_words(words)
-    #form a new sentence
-    sentence = form_sentence(words)
-    
+    if mode=="ml":
+        #tokenize tweet 
+        words = tokenize_tweet(tweet)
+        #remove extra white-spaces
+        words = remove_extra_spaces(words)
+        #remove urls 
+        words = remove_urls(words)
+        #remove user mentions 
+        words = remove_user_mentions(words)
+        #remove punctiation
+        words = remove_punctuation(words)
+        #remove numbers
+        words = remove_numbers(words)
+        #remove emojis
+        words = remove_emojis(words)
+        #remove non-arabic charachters
+        words = remove_foreign_language(words)
+        #remove tashkeel 
+        words = remove_tashkeel(words)
+        #remove repeated charachters
+        words = remove_repeated_chars(words)
+        #remove stop words 
+        words = remove_stop_words(words)
+        #form a new sentence
+        sentence = form_sentence(words)
+    else:
+        words = tokenize_tweet(tweet)
+        #remove extra white-spaces
+        words = remove_extra_spaces(words)
+        #remove urls 
+        words = remove_urls(words)
+        #remove user mentions 
+        words = remove_user_mentions(words)
+        #remove punctiation
+        words = remove_punctuation(words)
+        #remove numbers
+        words = remove_numbers(words)
+        #remove emojis
+        words = remove_emojis(words)
+        #remove non-arabic charachters
+        words = remove_foreign_language(words)
+        #form a new sentence
+        sentence = form_sentence(words)
     return sentence 
 
-def transform_data(database_path):
+def transform_data(database_path,mode="ml"):
     PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
     df = fetch(database_path)
-    df['clean_tweet'] = tqdm(df['tweet'].apply(clean_tweet))
+    df['clean_tweet'] = tqdm(df['tweet'].apply(clean_tweet,args=(mode,)))
     df.clean_tweet = df.clean_tweet.replace('',np.NaN)
     df.dropna(inplace=True)
     df = df[['clean_tweet','dialect']]

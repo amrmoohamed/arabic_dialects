@@ -4,7 +4,17 @@ import joblib
 import os 
 import sys 
 from io import StringIO
-#return render_template('./templates/index.html')
+import tarfile
+
+
+# Specify the path to the tar.xz file
+tar_file_path = './Models/SVC.pkl.tar.xz'
+extract_path = './Models'
+    
+    # Open the tar file
+with tarfile.open(tar_file_path) as tar:
+        # Extract the contents to the specified directory
+        tar.extractall(path=extract_path)
 
 app = Flask(__name__)
 

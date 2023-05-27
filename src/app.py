@@ -17,6 +17,7 @@ with tarfile.open(tar_file_path) as tar:
         tar.extractall(path=extract_path)
 
 app = Flask(__name__)
+server = app.server
 
 PROJECT_PATH = os.path.realpath(os.path.dirname(__file__))
 
